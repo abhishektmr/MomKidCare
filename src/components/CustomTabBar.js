@@ -1,3 +1,4 @@
+import { useAppTheme } from '@/theme/AppTheme';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -12,18 +13,13 @@ const ICONS = {
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   const insets = useSafeAreaInsets();
-
+  const theme = useAppTheme();
   // Ensure we don't overlap hardware nav buttons and respect safe areas
   const bottomInset = Math.max(insets.bottom, Platform.OS === 'android' ? 8 : 0);
 
   return (
     <SafeAreaView pointerEvents="box-none" style={styles.safeArea} edges={['bottom']}>
-      <View style={[
-        styles.container,
-        {
-          // marginBottom: bottomInset,
-        },
-      ]}>
+      <View style={[styles.container, {borderColor: theme.backgroundSecondary}]}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const label =
@@ -94,20 +90,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: 30,
-    // marginBottom: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 8,
-    borderRadius: 14,
+    marginHorizontal: 40,
+    paddingHorizontal: 1,
+    borderRadius: 28,
     backgroundColor: '#fff',
-    borderWidth: 2,
-    borderColor: '#E5E5EA',
+    borderWidth: 4,
     // Shadow iOS (make more prominent)
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: 'black',
         shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.18,
+        shadowOpacity: 0.9,
         shadowRadius: 14,
       },
       android: {},

@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Keyboard, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { useAppTheme } from '../../../theme/AppTheme';
@@ -63,13 +63,46 @@ const DashboardScreen = ({ navigation }) => {
   const theme = useAppTheme();
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{flex: 1}}>
       <CustomHeader/>
 
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.greeting}>Welcome back!</Text>
+        <Text style={styles.subtitle}>Track your pregnancy and baby care journey</Text>
+      </View>
+
       <ScrollView style={styles.scrollView}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.greeting}>Welcome back!</Text>
-          <Text style={styles.subtitle}>Track your pregnancy and baby care journey</Text>
+        {/* Quick Actions */}
+        <View style={styles.quickActionsContainer}>
+          <Text style={styles.sectionTitle}>MomKidCare Quick Actions</Text>
+          <View style={styles.quickActions}>
+            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
+              <Ionicons name="add-circle" size={32} color="#4A90E2" />
+              <Text style={styles.quickActionText}>Log Meal</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
+              <Ionicons name="water" size={32} color="#4A90E2" />
+              <Text style={styles.quickActionText}>Water Intake</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
+              <Ionicons name="bed" size={32} color="#4A90E2" />
+              <Text style={styles.quickActionText}>Weight Log</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
+              <Ionicons name="bed" size={32} color="#4A90E2" />
+              <Text style={styles.quickActionText}>Sleep Log</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
+              <Ionicons name="bed" size={32} color="#4A90E2" />
+              <Text style={styles.quickActionText}>Medicines Log</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
+              <Ionicons name="bed" size={32} color="#4A90E2" />
+              <Text style={styles.quickActionText}>Exercise Log</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Quick Stats */}
@@ -106,6 +139,8 @@ const DashboardScreen = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
+      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
@@ -206,10 +241,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 15,
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#6a4c93',
+    marginBottom: 5,
   },
   activityCard: {
     backgroundColor: '#fff',
@@ -230,6 +265,44 @@ const styles = StyleSheet.create({
   activitySubtext: {
     fontSize: 14,
     color: '#999',
+  },
+  quickActionsContainer: {
+    padding: 20,
+    paddingTop: 5,
+    paddingBottom: 30,
+  },
+  quickActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: "wrap"
+  },
+  quickActionButton: {
+    width: "30%",
+    height: "45%",
+    padding: 10,
+    borderRadius: 12,
+    alignItems: 'center',
+    margin: 5,
+    // Shadow iOS (make more prominent)
+    ...Platform.select({
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: { width: 2, height: 2},
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+      },
+      android: {},
+      default: {},
+    }),
+    shadowColor: 'black',
+    elevation: 8,
+  },
+  quickActionText: {
+    fontSize: 12,
+    color: '#6a4c93',
+    marginTop: 8,
+    fontWeight: "500",
+    textAlign: "center"
   },
 });
 

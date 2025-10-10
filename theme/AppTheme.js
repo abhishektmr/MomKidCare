@@ -16,9 +16,9 @@ const LightTheme = {
 const DarkTheme = {
   mode: 'dark',
   // Softer dark with warm tint for comfort at night
-  backgroundPrimary: 'green',
-  backgroundSecondary: 'red',
-  card: '#22222A',
+  backgroundPrimary: '#ffe5ec',
+  backgroundSecondary: '#ffc8dd',
+  card: '#0077b6',
   border: '#2E2E37',
   text: '#F3F4F6',
   mutedText: '#A1A1AA',

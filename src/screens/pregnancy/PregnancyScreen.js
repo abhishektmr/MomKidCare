@@ -96,7 +96,7 @@ const PregnancyScreen = () => {
 
   const theme = useAppTheme();
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundSecondary }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}>
       <ScrollView style={styles.scrollView}>
         {/* Header */}
         <View style={styles.header}>
@@ -134,24 +134,6 @@ const PregnancyScreen = () => {
           {pregnancyFeatures.map((feature, index) => renderFeatureCard(feature, index))}
         </View>
 
-        {/* Quick Actions */}
-        <View style={styles.quickActionsContainer}>
-          <Text style={styles.sectionTitle}>Quick Actions</Text>
-          <View style={styles.quickActions}>
-            <TouchableOpacity style={styles.quickActionButton}>
-              <Ionicons name="add-circle" size={24} color="#4A90E2" />
-              <Text style={styles.quickActionText}>Log Meal</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.quickActionButton}>
-              <Ionicons name="water" size={24} color="#4A90E2" />
-              <Text style={styles.quickActionText}>Water Intake</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.quickActionButton}>
-              <Ionicons name="bed" size={24} color="#4A90E2" />
-              <Text style={styles.quickActionText}>Sleep Log</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -299,34 +281,7 @@ const styles = StyleSheet.create({
   cardSubtitle: {
     fontSize: 14,
     color: '#666',
-  },
-  quickActionsContainer: {
-    padding: 20,
-    paddingBottom: 30,
-  },
-  quickActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  quickActionButton: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginHorizontal: 5,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-  },
-  quickActionText: {
-    fontSize: 12,
-    color: '#4A90E2',
-    marginTop: 5,
-    fontWeight: '500',
-  },
+  }
 });
 
 export default PregnancyScreen;
