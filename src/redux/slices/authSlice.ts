@@ -1,14 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// Define the User interface
-export interface User {
+// Define the Lady interface
+export interface Lady {
   id: string;
   email: string;
   name: string;
   phone: string;
   dateOfBirth: string;
-  dueDate: string;
-  currentWeek: number;
   pregnancyType: string;
   babyName?: string;
   babyBirthDate?: string;
@@ -18,15 +16,24 @@ export interface User {
 // Define the Auth state interface
 export interface AuthState {
   isAuthenticated: boolean;
-  user: User | null;
+  lady: Lady | null;
   isLoading: boolean;
   error: string | null;
 }
 
 // Initial state
 const initialState: AuthState = {
+  // isAuthenticated: false,
   isAuthenticated: true,
-  user: null,
+  // Lady: null,
+  lady: {
+    id: "1",
+    email: "Shaifali@gmail.com",
+    name: "Shaifali",
+    phone: "1234567891",
+    dateOfBirth: "04/01/1998",
+    pregnancyType: "first"
+  },
   isLoading: false,
   error: null,
 };
@@ -39,29 +46,29 @@ const authSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    loginSuccess: (state, action: PayloadAction<User>) => {
+    loginSuccess: (state, action: PayloadAction<Lady>) => {
       state.isLoading = false;
       state.isAuthenticated = true;
-      state.user = action.payload;
+      state.lady = action.payload;
       state.error = null;
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.isAuthenticated = false;
-      state.user = null;
+      state.lady = null;
       state.error = action.payload;
     },
     logout: (state) => {
       state.isAuthenticated = false;
-      state.user = null;
+      state.lady = null;
       state.error = null;
     },
     clearError: (state) => {
       state.error = null;
     },
-    updateUser: (state, action: PayloadAction<Partial<User>>) => {
-      if (state.user) {
-        state.user = { ...state.user, ...action.payload };
+    updateLady: (state, action: PayloadAction<Partial<Lady>>) => {
+      if (state.lady) {
+        state.lady = { ...state.lady, ...action.payload };
       }
     },
   },
@@ -73,7 +80,7 @@ export const {
   loginFailure, 
   logout, 
   clearError,
-  updateUser 
+  updateLady 
 } = authSlice.actions;
 
 export default authSlice.reducer;

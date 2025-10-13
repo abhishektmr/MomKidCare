@@ -1,19 +1,19 @@
-import { AuthState } from '../store/slices/authSlice';
-import { BabyState } from '../store/slices/babySlice';
-import { PregnancyState } from '../store/slices/pregnancySlice';
-import { SettingsState } from '../store/slices/settingsSlice';
+import { AuthState } from '../redux/slices/authSlice';
+import { BabyState } from '../redux/slices/babySlice';
+import { PregnancyState } from '../redux/slices/pregnancyTrackerSlice';
+import { SettingsState } from '../redux/slices/settingsSlice';
 
 // Re-export all types from slices for easy access
-export type { AuthState, User } from '../store/slices/authSlice';
+export type { AuthState, User } from '../redux/slices/authSlice';
 export type {
-    BabyProfile, SleepEntry as BabySleepEntry, BabyState, FeedingEntry, GrowthEntry, PlaytimeEntry, PottyEntry, VaccinationEntry
-} from '../store/slices/babySlice';
+  BabyProfile, SleepEntry as BabySleepEntry, BabyState, FeedingEntry, GrowthEntry, PlaytimeEntry, PottyEntry, VaccinationEntry
+} from '../redux/slices/babySlice';
 export type {
-    ExerciseEntry, HospitalBagItem, MealEntry, MedicineEntry, PregnancyState, ReportEntry, SleepEntry, WaterEntry, WeightEntry
-} from '../store/slices/pregnancySlice';
+  ExerciseEntry, HospitalBagItem, MealEntry, MedicineEntry, PregnancyState, ReportEntry, SleepEntry, WaterEntry, WeightEntry
+} from '../redux/slices/pregnancyTrackerSlice';
 export type {
-    NotificationSettings, SettingsState, UnitSettings
-} from '../store/slices/settingsSlice';
+  NotificationSettings, SettingsState, UnitSettings
+} from '../redux/slices/settingsSlice';
 
 // Navigation types
 export type RootStackParamList = {

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useAppTheme } from '../../../theme/AppTheme';
 
 const ReportsScreen = () => {
-  const { reports } = useSelector((state) => state.pregnancy);
+  const { reports } = useSelector((state) => state.pregnancyTracker);
 
   const reportTypes = [
     {

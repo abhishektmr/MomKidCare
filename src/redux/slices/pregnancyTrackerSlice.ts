@@ -73,8 +73,9 @@ export interface HospitalBagItem {
   category: 'clothing' | 'personal' | 'medical' | 'baby' | 'other';
 }
 
-export interface PregnancyState {
+export interface PregnancyTrackerState {
   currentWeek: number;
+  currentDay: number;
   dueDate: string | null;
   weight: WeightEntry[];
   meals: MealEntry[];
@@ -88,9 +89,10 @@ export interface PregnancyState {
   error: string | null;
 }
 
-const initialState: PregnancyState = {
-  currentWeek: 1,
-  dueDate: null,
+const initialState: PregnancyTrackerState = {
+  currentWeek: 36,
+  currentDay: 3,
+  dueDate: "2025-10-20",
   weight: [],
   meals: [],
   waterIntake: [],
@@ -112,8 +114,8 @@ const initialState: PregnancyState = {
   error: null,
 };
 
-const pregnancySlice = createSlice({
-  name: 'pregnancy',
+const pregnancyTrackerSlice = createSlice({
+  name: 'pregnancyTracker',
   initialState,
   reducers: {
     setPregnancyData: (state, action: PayloadAction<{ currentWeek: number; dueDate: string }>) => {
@@ -218,6 +220,6 @@ export const {
   setLoading,
   setError,
   clearError,
-} = pregnancySlice.actions;
+} = pregnancyTrackerSlice.actions;
 
-export default pregnancySlice.reducer;
+export default pregnancyTrackerSlice.reducer;

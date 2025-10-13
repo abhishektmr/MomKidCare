@@ -3,7 +3,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { setHapticEnabled, setSoundEnabled, setTheme, updateNotificationSettings } from '../../store/slices/settingsSlice';
+import { setHapticEnabled, setSoundEnabled, setTheme, updateNotificationSettings } from '../../redux/slices/settingsSlice';
 
 const SettingsScreen = () => {
   const dispatch = useDispatch();

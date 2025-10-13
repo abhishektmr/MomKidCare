@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../store/slices/authSlice';
+import { logout } from '../../redux/slices/authSlice';
 
 const CustomDrawerContent = ({ navigation }) => {
   const dispatch = useDispatch();

@@ -1,15 +1,20 @@
+import { useAppSelector } from '@/src/redux/hooks';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Keyboard, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { ImageBackground, Keyboard, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
 import { useAppTheme } from '../../../theme/AppTheme';
+import logMealImg from '../../assets/images/logMeal.png';
 import CustomHeader from '../../components/CustomHeader';
 
 const DashboardScreen = ({ navigation }) => {
-  const { currentWeek, dueDate } = useSelector((state) => state.pregnancy);
-  const { babyProfile } = useSelector((state) => state.baby);
+  const { currentWeek, currentDay, dueDate } = useAppSelector((state) => state.pregnancyTracker);
+  const { name } = useAppSelector(state => state.auth.lady);
+  const { babyProfile } = useAppSelector((state) => state.baby);
 
+  const currentWeekString = `${currentWeek} ${currentWeek > 1 ? 'weeks' : 'week'}`;
+  const currentDayString = `${currentDay} ${currentDay > 1 ? 'days' : 'day'}`;
+  const combinedWeeksDaysString = `${currentWeek > 0 ? currentWeekString : " "} ${currentDay > 0 ? currentDayString : ""}`
   const dashboardCards = [
     {
       title: 'Pregnancy Progress',
@@ -64,82 +69,96 @@ const DashboardScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{flex: 1}}>
-      <CustomHeader/>
+        <View style={{ flex: 1 }}>
+          <CustomHeader />
 
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.greeting}>Welcome back!</Text>
-        <Text style={styles.subtitle}>Track your pregnancy and baby care journey</Text>
-      </View>
-
-      <ScrollView style={styles.scrollView}>
-        {/* Quick Actions */}
-        <View style={styles.quickActionsContainer}>
-          <Text style={styles.sectionTitle}>MomKidCare Quick Actions</Text>
-          <View style={styles.quickActions}>
-            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
-              <Ionicons name="add-circle" size={32} color="#4A90E2" />
-              <Text style={styles.quickActionText}>Log Meal</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
-              <Ionicons name="water" size={32} color="#4A90E2" />
-              <Text style={styles.quickActionText}>Water Intake</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
-              <Ionicons name="bed" size={32} color="#4A90E2" />
-              <Text style={styles.quickActionText}>Weight Log</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
-              <Ionicons name="bed" size={32} color="#4A90E2" />
-              <Text style={styles.quickActionText}>Sleep Log</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
-              <Ionicons name="bed" size={32} color="#4A90E2" />
-              <Text style={styles.quickActionText}>Medicines Log</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.quickActionButton, {backgroundColor: theme.backgroundSecondary}]}>
-              <Ionicons name="bed" size={32} color="#4A90E2" />
-              <Text style={styles.quickActionText}>Exercise Log</Text>
-            </TouchableOpacity>
+          {/* Header */}
+          <View style={styles.header}>
+            <View style={styles.personalisedInfoContainer}>
+              <Text style={styles.greeting}>Hi {name}!</Text>
+              <Text style={[styles.personalisedInfo, {backgroundColor: theme.backgroundPrimary}]}>{ combinedWeeksDaysString }</Text>
+              <Text style={[styles.personalisedInfo, {backgroundColor: theme.backgroundPrimary}]}>81 kg</Text>
+            </View>
+            <Text style={styles.subtitle}>Log your daily activities & track your pregnancy journey effortlessly!</Text>
           </View>
+
+          <ScrollView style={styles.scrollView}>
+            {/* Quick Actions */}
+            <View style={styles.quickActionsContainer}>
+              <Text style={styles.sectionTitle}>Quick Actions</Text>
+              <View style={styles.quickActions}>
+                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
+                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
+                    <Text style={styles.quickActionText}>Water Intake</Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
+                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
+                    <Text style={styles.quickActionText}>Log Meal</Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
+                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
+                    <Text style={styles.quickActionText}>Log Weight</Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
+                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
+                    <Text style={styles.quickActionText}>Log Sleep</Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
+                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
+                    <Text style={styles.quickActionText}>Log Exercise</Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
+                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
+                    <Text style={styles.quickActionText}>Log Medicines</Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Quick Stats */}
+            <View style={styles.statsContainer}>
+              <View style={styles.statCard}>
+                <Text style={styles.statNumber}>{currentWeek}</Text>
+                <Text style={styles.statLabel}>Weeks</Text>
+              </View>
+              <View style={styles.statCard}>
+                <Text style={styles.statNumber}>
+                  {dueDate ? Math.ceil((new Date(dueDate) - new Date()) / (1000 * 60 * 60 * 24)) : '--'}
+                </Text>
+                <Text style={styles.statLabel}>Days to Due</Text>
+              </View>
+              <View style={styles.statCard}>
+                <Text style={styles.statNumber}>
+                  {babyProfile ? '1' : '0'}
+                </Text>
+                <Text style={styles.statLabel}>Babies</Text>
+              </View>
+            </View>
+
+            {/* Dashboard Cards */}
+            <View style={styles.cardsContainer}>
+              {dashboardCards.map((card, index) => renderCard(card, index))}
+            </View>
+
+            {/* Recent Activity */}
+            <View style={styles.activitySection}>
+              <Text style={styles.sectionTitle}>Recent Activity</Text>
+              <View style={styles.activityCard}>
+                <Text style={styles.activityText}>No recent activity</Text>
+                <Text style={styles.activitySubtext}>Start logging your daily activities</Text>
+              </View>
+            </View>
+          </ScrollView>
         </View>
-
-        {/* Quick Stats */}
-        <View style={styles.statsContainer}>
-          <View style={styles.statCard}>
-            <Text style={styles.statNumber}>{currentWeek}</Text>
-            <Text style={styles.statLabel}>Weeks</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statNumber}>
-              {dueDate ? Math.ceil((new Date(dueDate) - new Date()) / (1000 * 60 * 60 * 24)) : '--'}
-            </Text>
-            <Text style={styles.statLabel}>Days to Due</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statNumber}>
-              {babyProfile ? '1' : '0'}
-            </Text>
-            <Text style={styles.statLabel}>Babies</Text>
-          </View>
-        </View>
-
-        {/* Dashboard Cards */}
-        <View style={styles.cardsContainer}>
-          {dashboardCards.map((card, index) => renderCard(card, index))}
-        </View>
-
-        {/* Recent Activity */}
-        <View style={styles.activitySection}>
-          <Text style={styles.sectionTitle}>Recent Activity</Text>
-          <View style={styles.activityCard}>
-            <Text style={styles.activityText}>No recent activity</Text>
-            <Text style={styles.activitySubtext}>Start logging your daily activities</Text>
-          </View>
-        </View>
-      </ScrollView>
-      </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );
@@ -159,15 +178,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E0E0E0',
   },
+  personalisedInfoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginBottom: 5
+  },
+  personalisedInfo: {
+    fontSize: 14,
+    color: "#6a4c93",
+    marginLeft: 10,
+    padding: 4,
+    borderRadius: 12
+  },
   greeting: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 5,
+    color: "#6a4c93",
+    textAlign: "center"
   },
   subtitle: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 14,
+    color: "#6a4c93",
   },
   statsContainer: {
     flexDirection: 'row',
@@ -274,34 +306,34 @@ const styles = StyleSheet.create({
   quickActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    rowGap: 6.5
   },
   quickActionButton: {
-    width: "30%",
-    height: "45%",
-    padding: 10,
+    width: "32%",
+    height: "100",
     borderRadius: 12,
     alignItems: 'center',
-    margin: 5,
+    // margin: 5,
     // Shadow iOS (make more prominent)
     ...Platform.select({
       ios: {
-        shadowColor: 'black',
-        shadowOffset: { width: 2, height: 2},
-        shadowOpacity: 0.5,
-        shadowRadius: 2,
+        // shadowColor: 'black',
+        // shadowOffset: { width: 2, height: 2 },
+        // shadowOpacity: 0.5,
+        // shadowRadius: 2,
       },
       android: {},
       default: {},
     }),
-    shadowColor: 'black',
-    elevation: 8,
+    // shadowColor: 'black',
+    // elevation: 8,
   },
   quickActionText: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#6a4c93',
-    marginTop: 8,
-    fontWeight: "500",
+    // marginTop: 8,
+    fontWeight: "bold",
     textAlign: "center"
   },
 });

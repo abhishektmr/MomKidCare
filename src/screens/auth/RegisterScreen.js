@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
-import { loginFailure, loginStart, loginSuccess } from '../../store/slices/authSlice';
+import { loginFailure, loginStart, loginSuccess } from '../../redux/slices/authSlice';
 
 const RegisterScreen = ({ navigation }) => {
   const dispatch = useDispatch();

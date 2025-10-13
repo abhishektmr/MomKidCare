@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useAppTheme } from '../../../theme/AppTheme';
 
 const PregnancyScreen = () => {
-  const { currentWeek, dueDate } = useSelector((state) => state.pregnancy);
+  const { currentWeek, dueDate } = useSelector((state) => state.pregnancyTracker);
 
   const pregnancyFeatures = [
     {

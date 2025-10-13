@@ -1,12 +1,12 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { AppBackground, ThemeProvider } from '../../theme/AppTheme';
+import { useAppSelector } from '../redux/hooks';
 import MainNavigator from './drawer/MainNavigator';
 import AuthNavigator from './stack/AuthNavigator';
 
 const AppNavigator = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const navTheme = {
     ...DefaultTheme,
     colors: {

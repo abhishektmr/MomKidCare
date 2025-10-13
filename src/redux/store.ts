@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from './slices/authSlice';
 import babySlice from './slices/babySlice';
-import pregnancySlice from './slices/pregnancySlice';
+import pregnancyTrackerSlice from './slices/pregnancyTrackerSlice';
 import settingsSlice from './slices/settingsSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
-    pregnancy: pregnancySlice,
+    pregnancyTracker: pregnancyTrackerSlice,
     baby: babySlice,
     settings: settingsSlice,
   },
