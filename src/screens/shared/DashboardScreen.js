@@ -76,49 +76,49 @@ const DashboardScreen = ({ navigation }) => {
 
         {/* Header */}
         <LinearGradient
-            colors={[theme.primaryColor, theme.secondaryColor]}
-            start={{ x: 0.5, y: 0 }}
-            end={{ x: 0.5, y: 1 }}
-            style={styles.header}>
-              <View style={styles.personalisedInfoContainer}>
+          colors={[theme.primaryColor, theme.secondaryColor]}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
+          style={styles.header}>
+          <View style={styles.personalisedInfoContainer}>
             <Text style={styles.greeting}>Hi {name}!</Text>
-            <Text style={[styles.personalisedInfo]}>{combinedWeeksDaysString}</Text>
-            <Text style={[styles.personalisedInfo]}>81 kg</Text>
+            <Text style={[styles.personalisedInfo, { color: theme.textColor, backgroundColor: theme.primaryColor }]}>{combinedWeeksDaysString}</Text>
+            <Text style={[styles.personalisedInfo, { color: theme.textColor, backgroundColor: theme.primaryColor }]}>81 kg</Text>
           </View>
           <Text style={styles.subtitle}>Log your daily activities & track your pregnancy journey effortlessly!</Text>
-            </LinearGradient>
+        </LinearGradient>
 
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={[styles.scrollView, { backgroundColor: theme.secondaryColor }]}>
           {/* Quick Actions */}
           <View style={styles.quickActionsContainer}>
             <Text style={styles.sectionTitle}>Quick Actions</Text>
             <View style={styles.quickActions}>
-              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]} onPress={() => navigation.navigate('WaterIntake')}>
+              <TouchableOpacity style={[styles.quickActionButton, { borderColor: theme.borderColor }]} onPress={() => navigation.navigate('WaterIntake')}>
                 <Image source={waterIntakeImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
                 <Text style={styles.quickActionText}>Water Intake</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+              <TouchableOpacity style={[styles.quickActionButton, { borderColor: theme.borderColor }]}>
                 <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
                 <Text style={styles.quickActionText}>Log Meals</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+              <TouchableOpacity style={[styles.quickActionButton, { borderColor: theme.borderColor }]}>
                 <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
                 <Text style={styles.quickActionText}>Log Sleep</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+              <TouchableOpacity style={[styles.quickActionButton, { borderColor: theme.borderColor }]}>
                 <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
                 <Text style={styles.quickActionText}>Log Weight</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+              <TouchableOpacity style={[styles.quickActionButton, { borderColor: theme.borderColor }]}>
                 <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
                 <Text style={styles.quickActionText}>Log Exercise</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+              <TouchableOpacity style={[styles.quickActionButton, { borderColor: theme.borderColor }]}>
                 <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
                 <Text style={styles.quickActionText}>Log Medicines</Text>
               </TouchableOpacity>
@@ -129,17 +129,17 @@ const DashboardScreen = ({ navigation }) => {
           <View style={styles.quickStatsContainer}>
             <Text style={styles.sectionTitle}>Quick Stats</Text>
             <View style={styles.statsCardContainer}>
-              <View style={[styles.statCard, {borderColor: theme.borderColor}]}>
+              <View style={[styles.statCard, { borderColor: theme.borderColor }]}>
                 <Text style={styles.statNumber}>{currentWeek}</Text>
                 <Text style={styles.statLabel}>Weeks</Text>
               </View>
-              <View style={[styles.statCard, {borderColor: theme.borderColor}]}>
+              <View style={[styles.statCard, { borderColor: theme.borderColor }]}>
                 <Text style={styles.statNumber}>
                   {dueDate ? Math.ceil((new Date(dueDate) - new Date()) / (1000 * 60 * 60 * 24)) : '--'}
                 </Text>
                 <Text style={styles.statLabel}>Days to Due</Text>
               </View>
-              <View style={[styles.statCard, {borderColor: theme.borderColor}]}>
+              <View style={[styles.statCard, { borderColor: theme.borderColor }]}>
                 <Text style={styles.statNumber}>
                   {babyProfile ? '1' : '0'}
                 </Text>
@@ -186,8 +186,6 @@ const styles = StyleSheet.create({
   },
   personalisedInfo: {
     fontSize: 14,
-    color: "#6a4c93",
-    backgroundColor: "#dec9e9",
     marginLeft: 10,
     padding: 4,
     borderRadius: 12
@@ -281,7 +279,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: '#6a4c93',
-    marginVertical: 10,
+    marginBottom: 5,
     paddingTop: 10,
   },
   activityCard: {

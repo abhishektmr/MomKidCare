@@ -1,3 +1,4 @@
+import PieChart from "@/src/components/charts/PieChart";
 import CustomHeader from "@/src/components/CustomHeader";
 import { useAppSelector } from "@/src/redux/hooks";
 import CustomReminders from "@/src/screens/cards/CustomReminders";
@@ -6,16 +7,19 @@ import EvilIcons from '@expo/vector-icons/EvilIcons';
 import { LinearGradient } from "expo-linear-gradient";
 import { Bell } from "lucide-react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Animated, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Animated, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function WaterIntakeScreen() {
   const theme = useAppTheme();
+  const { width } = useWindowDimensions();
   const { currentWeek } = useAppSelector((state) => state.pregnancyTracker);
 
   const [readMoreClicked, setReadMoreClicked] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim2 = useRef(new Animated.Value(1)).current;
+  const glassInputTranslateX = useRef(new Animated.Value(0)).current;
+  const pieChartTranslateX = useRef(new Animated.Value(0)).current;
   const [glasses, setGlasses] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -40,6 +44,7 @@ export default function WaterIntakeScreen() {
       ).start();
     })();
   })
+  
   // Reminders state
   const [reminders, setReminders] = useState([
     { id: 1, glasses: 2, time: "Till 8:00 AM" },
@@ -60,6 +65,34 @@ export default function WaterIntakeScreen() {
       // fadeAnim.setValue(0);
     });
   }
+
+  const handleInputGlassChange = (value) => {
+    setGlasses(value);
+
+    if (value > 0) {
+      Animated.parallel([
+        Animated.timing(glassInputTranslateX, {
+          toValue: -(width / 10),
+          duration: 1000,
+          useNativeDriver: true
+        }),
+        Animated.timing(pieChartTranslateX, {
+          toValue: (width / 10),
+          duration: 1000,
+          useNativeDriver: true
+        })
+      ]).start();
+    } else {
+      console.log("inside else");
+      Animated.timing(glassInputTranslateX, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true
+      }).start();
+      pieChartTranslateX.setValue(0);
+    };
+  }
+
   const trimester = currentWeek / 12 <= 1 ? 'first' : currentWeek / 12 <= 2 ? 'second' : 'third';
   const trimesterWaterIntake = {
     first: 10,
@@ -107,6 +140,7 @@ export default function WaterIntakeScreen() {
           colors={[theme.primaryColor, theme.secondaryColor]}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
+          style={{ paddingTop: 20 }}
         >
 
           {
@@ -136,21 +170,36 @@ export default function WaterIntakeScreen() {
 
         <View style={{ paddingTop: 20 }}>
           <View style={[styles.inputContainer, { borderWidth: 1, borderColor: theme.borderColor }]}>
-            <Text style={{ fontWeight: 500, fontSize: 18, color: theme.textColor }}>How many glasses today?</Text>
-            <View style={[styles.inputNumberContainer]}>
-              <TextInput style={[styles.numberContainer, { color: theme.textColor, borderColor: isFocused ? theme.primaryColor : theme.borderColor }]}
-                value={glasses}
-                onChangeText={setGlasses}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                keyboardType="numeric"
-                placeholder="0"
-                placeholderTextColor={theme.borderColor}
-                maxLength={2}
-              />
-              <Text style={{ fontWeight: 500, fontSize: 16, color: theme.textColor }}>{glassStr}</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+              <Text style={{ fontWeight: 500, fontSize: 16, color: theme.textColor }}>How many glasses today?</Text>
+              <Text style={{ alignSelf: "center", fontWeight: 400, fontSize: 14, color: theme.textLightColor }}> 1 glass = 250ml </Text>
             </View>
-            <Text style={{ alignSelf: "center", fontWeight: 800, fontSize: 14, color: theme.textLightColor }}> 1 glass = 250ml </Text>
+
+            <View style={{ flexDirection: "row", justifyContent: "center", paddingTop: 15, paddingBottom: 8 }}>
+              <Animated.View style={[styles.inputNumberContainer, { transform: [{ translateX: glassInputTranslateX }] }]}>
+                <TextInput style={[styles.numberContainer, { color: theme.textColor, borderColor: isFocused ? theme.primaryColor : theme.borderColor }]}
+                  value={glasses}
+                  onChangeText={handleInputGlassChange}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  keyboardType="numeric"
+                  placeholder="0"
+                  placeholderTextColor={theme.borderColor}
+                  maxLength={2}
+                />
+                <Text style={{ fontWeight: 500, fontSize: 14, color: theme.textColor }}>{glassStr}</Text>
+              </Animated.View>
+
+              {/* pie chart */}
+              {glasses > 0 &&
+                <Animated.View style={[{transform: [{ translateX: pieChartTranslateX }]}]}>
+                  <PieChart
+                    current={parseInt(glasses) || 0}
+                    target={8} // Adjust target glasses as needed
+                    size={50}
+                  />
+                </Animated.View>}
+            </View>
           </View>
 
           {/* Notification Settings */}
@@ -172,14 +221,14 @@ export default function WaterIntakeScreen() {
               <View>
                 <CustomReminders />
 
-                <Text style={{ color: theme.textColor, fontSize: 16, fontWeight: 500, marginTop: 20, paddingHorizontal: 10}}>Repeat on:</Text>
-                <View style={{flexDirection: "row", justifyContent: "space-between", padding: 10}}>
+                <Text style={{ color: theme.textColor, fontSize: 16, fontWeight: 500, marginTop: 20, paddingHorizontal: 10 }}>Repeat on:</Text>
+                <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 10 }}>
                   {dayNames.map((day, index) => (
                     <TouchableOpacity key={index}
                       onPress={() => toggleDay(index)}
-                      style={{width: 30, height: 30, borderRadius: 15, alignItems: "center", justifyContent: "center", backgroundColor: notificationDays[index] ? theme.primaryColor : theme.borderColor}}
+                      style={{ width: 30, height: 30, borderRadius: 15, alignItems: "center", justifyContent: "center", backgroundColor: notificationDays[index] ? theme.primaryColor : theme.borderColor }}
                     >
-                      <Text style={{color: notificationDays[index] ? theme.textColor : "gray"}}>{day}</Text>
+                      <Text style={{ color: notificationDays[index] ? theme.textColor : "gray" }}>{day}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -217,7 +266,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 15
   },
   numberContainer: {
     borderRadius: 8,
