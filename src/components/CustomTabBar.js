@@ -19,7 +19,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
   return (
     <SafeAreaView pointerEvents="box-none" style={styles.safeArea} edges={['bottom']}>
-      <View style={[styles.container, {borderColor: theme.backgroundSecondary}]}>
+      <View style={[styles.container, {borderColor: theme.primaryColor}]}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const label =

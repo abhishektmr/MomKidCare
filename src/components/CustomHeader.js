@@ -1,76 +1,69 @@
 import { useAppTheme } from "@/theme/AppTheme";
-import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import Feather from '@expo/vector-icons/Feather';
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import { Platform, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function CustomHeader() {
-  const theme = useAppTheme();
-  const navigation = useNavigation();
-  const [searchIconClicked, setSearchIconClicked] = useState(false);
+export default function CustomHeader({ icon, text }) {
 
-  return (
-    <View style={styles.container}>
+    const theme = useAppTheme();
+    const navigation = useNavigation();
 
-      <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Ionicons name="menu" size={32} color="#6a4c93" />
-        </TouchableOpacity> 
-      </View>
-       
-      <View style={[styles.textInputAndSearchContainer, {borderWidth: 4, borderColor: theme.backgroundPrimary}]}>
-        {
-          searchIconClicked ?
-          <View style={{flex: 1}}>
-            <TextInput autoFocus={true} onBlur={() => setSearchIconClicked(false)} style={{height: Platform.OS === 'ios' ? 32 : 36}}></TextInput>
-          </View> : 
+    return (
+        <View style={[styles.container]}>
 
-          <View style={styles.searchIconContainer}>
-            <TouchableOpacity onPress={() => setSearchIconClicked(true)}>
-              <MaterialIcons name="search" size={28} color="#6a4c93" />
-            </TouchableOpacity> 
-          </View>
-        }
-      </View>
-    
-      <View style={styles.profileIconContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-          <MaterialCommunityIcons name="face-woman-outline" size={28} color="#6a4c93" />
-        </TouchableOpacity> 
-      </View>
-      
-    </View>
-  );
+        {/* {/* //   <View style={styles.iconContainer}>
+        //     <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        //         <Feather name={icon} size={30} color={theme.icon} />
+        //     </TouchableOpacity> 
+        //   </View>
+
+        //   <View style={styles.textContainer}>
+        //     <Text style={[styles.text, {color: theme.text}]}>{text}</Text>
+        //   </View>
+
+        // </View>
+        // ); 
+
+        // <LinearGradient
+        // colors={[theme.primaryColor, theme.secondaryColor]}
+        // start={{ x: 0.5, y: 0 }}
+        // end={{ x: 0.5, y: 1 }}
+        //     style={[styles.container]}> */}
+
+            <View style={styles.iconContainer}>
+                <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                    <Feather name={icon} size={30} color={theme.iconColor} />
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.textContainer}>
+                <Text style={[styles.text, { color: theme.textColor }]}>{text}</Text>
+            </View>
+
+        {/* // </LinearGradient> */}
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginHorizontal: 20
-  },
-  menuContainer: {
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  textInputAndSearchContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    marginHorizontal: 30,
-    borderRadius: 16,
-    backgroundColor: "#fff",
-  },
-  searchIconContainer: {
-    flex: 1,
-    flexDirection: "row-reverse",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  profileIconContainer: {
-    alignItems: "center",
-    justifyContent: "center"
-  },
+    container: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+
+    },
+    iconContainer: {
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    textContainer: {
+        marginLeft: 40,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    text: {
+        fontWeight: "700",
+        fontSize: 18
+    }
 });

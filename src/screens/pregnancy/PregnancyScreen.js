@@ -96,7 +96,7 @@ const PregnancyScreen = () => {
 
   const theme = useAppTheme();
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.headerBackground }]}>
       <ScrollView style={styles.scrollView}>
         {/* Header */}
         <View style={styles.header}>

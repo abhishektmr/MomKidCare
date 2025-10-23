@@ -1,11 +1,13 @@
 import { useAppSelector } from '@/src/redux/hooks';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { ImageBackground, Keyboard, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Image, Keyboard, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppTheme } from '../../../theme/AppTheme';
 import logMealImg from '../../assets/images/logMeal.png';
-import CustomHeader from '../../components/CustomHeader';
+import waterIntakeImg from '../../assets/images/waterIntake.png';
+import CustomDashboardHeader from '../../components/CustomDashboardHeader';
 
 const DashboardScreen = ({ navigation }) => {
   const { currentWeek, currentDay, dueDate } = useAppSelector((state) => state.pregnancyTracker);
@@ -67,99 +69,100 @@ const DashboardScreen = ({ navigation }) => {
 
   const theme = useAppTheme();
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1 }}>
-          <CustomHeader />
+    <SafeAreaView style={[styles.container]}>
+      <View style={{ flex: 1 }} onTouchStart={() => { Keyboard.dismiss(); }}>
+        {/* Custom Header */}
+        <CustomDashboardHeader />
 
-          {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.personalisedInfoContainer}>
-              <Text style={styles.greeting}>Hi {name}!</Text>
-              <Text style={[styles.personalisedInfo, {backgroundColor: theme.backgroundPrimary}]}>{ combinedWeeksDaysString }</Text>
-              <Text style={[styles.personalisedInfo, {backgroundColor: theme.backgroundPrimary}]}>81 kg</Text>
+        {/* Header */}
+        <LinearGradient
+            colors={[theme.primaryColor, theme.secondaryColor]}
+            start={{ x: 0.5, y: 0 }}
+            end={{ x: 0.5, y: 1 }}
+            style={styles.header}>
+              <View style={styles.personalisedInfoContainer}>
+            <Text style={styles.greeting}>Hi {name}!</Text>
+            <Text style={[styles.personalisedInfo]}>{combinedWeeksDaysString}</Text>
+            <Text style={[styles.personalisedInfo]}>81 kg</Text>
+          </View>
+          <Text style={styles.subtitle}>Log your daily activities & track your pregnancy journey effortlessly!</Text>
+            </LinearGradient>
+
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={[styles.scrollView, { backgroundColor: theme.secondaryColor }]}>
+          {/* Quick Actions */}
+          <View style={styles.quickActionsContainer}>
+            <Text style={styles.sectionTitle}>Quick Actions</Text>
+            <View style={styles.quickActions}>
+              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]} onPress={() => navigation.navigate('WaterIntake')}>
+                <Image source={waterIntakeImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
+                <Text style={styles.quickActionText}>Water Intake</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+                <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
+                <Text style={styles.quickActionText}>Log Meals</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+                <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
+                <Text style={styles.quickActionText}>Log Sleep</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+                <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
+                <Text style={styles.quickActionText}>Log Weight</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+                <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
+                <Text style={styles.quickActionText}>Log Exercise</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.borderColor}]}>
+                <Image source={logMealImg} style={{ height: "80%", width: "100%", borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, overflow: 'hidden' }} />
+                <Text style={styles.quickActionText}>Log Medicines</Text>
+              </TouchableOpacity>
             </View>
-            <Text style={styles.subtitle}>Log your daily activities & track your pregnancy journey effortlessly!</Text>
           </View>
 
-          <ScrollView style={styles.scrollView}>
-            {/* Quick Actions */}
-            <View style={styles.quickActionsContainer}>
-              <Text style={styles.sectionTitle}>Quick Actions</Text>
-              <View style={styles.quickActions}>
-                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
-                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
-                    <Text style={styles.quickActionText}>Water Intake</Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
-                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
-                    <Text style={styles.quickActionText}>Log Meal</Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
-                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
-                    <Text style={styles.quickActionText}>Log Weight</Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
-                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
-                    <Text style={styles.quickActionText}>Log Sleep</Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
-                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
-                    <Text style={styles.quickActionText}>Log Exercise</Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={[styles.quickActionButton, {borderColor: theme.backgroundSecondary, borderWidth: 2}]}>
-                  <ImageBackground source={logMealImg} style={{justifyContent: "flex-end", height: "100%", width: "100%", borderRadius: 10, overflow: 'hidden'}}>
-                    <Text style={styles.quickActionText}>Log Medicines</Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            {/* Quick Stats */}
-            <View style={styles.statsContainer}>
-              <View style={styles.statCard}>
+          {/* Quick Stats */}
+          <View style={styles.quickStatsContainer}>
+            <Text style={styles.sectionTitle}>Quick Stats</Text>
+            <View style={styles.statsCardContainer}>
+              <View style={[styles.statCard, {borderColor: theme.borderColor}]}>
                 <Text style={styles.statNumber}>{currentWeek}</Text>
                 <Text style={styles.statLabel}>Weeks</Text>
               </View>
-              <View style={styles.statCard}>
+              <View style={[styles.statCard, {borderColor: theme.borderColor}]}>
                 <Text style={styles.statNumber}>
                   {dueDate ? Math.ceil((new Date(dueDate) - new Date()) / (1000 * 60 * 60 * 24)) : '--'}
                 </Text>
                 <Text style={styles.statLabel}>Days to Due</Text>
               </View>
-              <View style={styles.statCard}>
+              <View style={[styles.statCard, {borderColor: theme.borderColor}]}>
                 <Text style={styles.statNumber}>
                   {babyProfile ? '1' : '0'}
                 </Text>
                 <Text style={styles.statLabel}>Babies</Text>
               </View>
             </View>
+          </View>
 
-            {/* Dashboard Cards */}
-            <View style={styles.cardsContainer}>
-              {dashboardCards.map((card, index) => renderCard(card, index))}
-            </View>
+          {/* Dashboard Cards */}
+          <View style={styles.cardsContainer}>
+            {dashboardCards.map((card, index) => renderCard(card, index))}
+          </View>
 
-            {/* Recent Activity */}
-            <View style={styles.activitySection}>
-              <Text style={styles.sectionTitle}>Recent Activity</Text>
-              <View style={styles.activityCard}>
-                <Text style={styles.activityText}>No recent activity</Text>
-                <Text style={styles.activitySubtext}>Start logging your daily activities</Text>
-              </View>
+          {/* Recent Activity */}
+          <View style={styles.activitySection}>
+            <Text style={styles.sectionTitle}>Recent Activity</Text>
+            <View style={styles.activityCard}>
+              <Text style={styles.activityText}>No recent activity</Text>
+              <Text style={styles.activitySubtext}>Start logging your daily activities</Text>
             </View>
-          </ScrollView>
-        </View>
-      </TouchableWithoutFeedback>
+          </View>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -173,10 +176,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    padding: 20,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    padding: 20
   },
   personalisedInfoContainer: {
     flexDirection: "row",
@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
   personalisedInfo: {
     fontSize: 14,
     color: "#6a4c93",
+    backgroundColor: "#dec9e9",
     marginLeft: 10,
     padding: 4,
     borderRadius: 12
@@ -201,32 +202,36 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#6a4c93",
   },
-  statsContainer: {
+  quickStatsContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 10
+  },
+  statsCardContainer: {
     flexDirection: 'row',
-    padding: 20,
     justifyContent: 'space-between',
   },
   statCard: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 15,
+    padding: 8,
     borderRadius: 12,
     alignItems: 'center',
     marginHorizontal: 5,
+    borderWidth: 1,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: '#6a4c93',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.9,
     shadowRadius: 2,
   },
   statNumber: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#4A90E2',
+    color: '#6a4c93',
   },
   statLabel: {
     fontSize: 12,
-    color: '#666',
+    color: '#6a4c93',
     marginTop: 5,
   },
   cardsContainer: {
@@ -276,7 +281,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: '#6a4c93',
-    marginBottom: 5,
+    marginVertical: 10,
+    paddingTop: 10,
   },
   activityCard: {
     backgroundColor: '#fff',
@@ -299,9 +305,8 @@ const styles = StyleSheet.create({
     color: '#999',
   },
   quickActionsContainer: {
-    padding: 20,
-    paddingTop: 5,
-    paddingBottom: 30,
+    paddingHorizontal: 20,
+    marginBottom: 10
   },
   quickActions: {
     flexDirection: 'row',
@@ -311,9 +316,10 @@ const styles = StyleSheet.create({
   },
   quickActionButton: {
     width: "32%",
-    height: "100",
+    maxHeight: "120",
     borderRadius: 12,
     alignItems: 'center',
+    borderWidth: 1.5,
     // margin: 5,
     // Shadow iOS (make more prominent)
     ...Platform.select({
@@ -330,9 +336,9 @@ const styles = StyleSheet.create({
     // elevation: 8,
   },
   quickActionText: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#6a4c93',
-    // marginTop: 8,
+    marginVertical: 4,
     fontWeight: "bold",
     textAlign: "center"
   },

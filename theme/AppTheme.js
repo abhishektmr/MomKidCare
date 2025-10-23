@@ -1,27 +1,17 @@
-import React, { createContext, useContext, useMemo } from 'react';
-import { StyleSheet, useColorScheme, View } from 'react-native';
+import React, { createContext, useContext } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 const LightTheme = {
   mode: 'light',
-  // Soft gradient-inspired solids for background layers
-  backgroundPrimary: '#f8ad9d', // pastel lavender
-  backgroundSecondary: 'red', // blush pink tint
-  card: '#FFFFFF',
-  border: '#E8E6EE',
-  text: '#2C2C2E',
-  mutedText: '#6B7280',
-  accent: '#9D7BD8', // gentle lavender
-};
-
-const DarkTheme = {
-  mode: 'dark',
+  //f8f7ff
   // Softer dark with warm tint for comfort at night
-  backgroundPrimary: '#ffe5ec',
-  backgroundSecondary: '#ffc8dd',
-  card: '#0077b6',
-  border: '#2E2E37',
-  text: '#F3F4F6',
-  mutedText: '#A1A1AA',
+  primaryColor: '#ffa6c1',
+  secondaryColor: "#edf2fb",
+  textColor: "#6a4c93",
+  textLightColor: "#9a8c98",
+  iconColor: "#6a4c93",
+  borderColor: '#E0E0E0',
+  btnColor: '#E0EBFF',
   accent: '#B399F0',
 };
 
@@ -34,19 +24,14 @@ const ThemeContext = createContext(LightTheme);
 export const useAppTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
-  // const colorScheme = Appearance.getColorScheme();
-  const colorScheme = useColorScheme();
-  const theme = useMemo(() => (colorScheme === 'dark' ? DarkTheme : LightTheme), [colorScheme]);
-  return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={LightTheme}>{children}</ThemeContext.Provider>;
 };
 
 // A wrapper view that paints the global soothing background color across the app
 export const AppBackground = ({ children }) => {
   const theme = useAppTheme();
   return (
-    <View style={[styles.container, { backgroundColor: theme.backgroundPrimary }]}>
-      {/* Optional subtle overlay to emulate a soft gradient feel */}
-      <View style={[styles.overlay, { backgroundColor: theme.backgroundSecondary }]} />
+    <View style={[styles.container, { backgroundColor: theme.primaryColor }]}>
       <View style={styles.content}>{children}</View>
     </View>
   );
